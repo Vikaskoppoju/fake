@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full Screen Timer Page</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+  }
+
+  #content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>
+</head>
+<body>
+<button id="startButton">Start Timer</button>
+<div id="content" class="hidden">
+  <h1>Welcome to the Full Screen Timer Page!</h1>
+  <p>This content becomes visible after the timer is over.</p>
+</div>
+<script>
+  const startButton = document.getElementById("startButton");
+  const contentElement = document.getElementById("content");
+
+  startButton.addEventListener("click", () => {
+    startButton.style.display = "none"; // Hide the start button
+    contentElement.classList.remove("hidden"); // Show the content element
+    enterFullScreen(); // Enter full-screen mode
+    startCountdown(); // Start countdown after entering full-screen
+  });
+
+  function enterFullScreen() {
+    const elem = document.documentElement;
+
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) { /* Firefox */
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+      elem.msRequestFullscreen();
+    }
+  }
+
+  function startCountdown() {
+    const countdownTime = 5000; // 5 seconds
+
+    setTimeout(() => {
+      contentElement.innerHTML = "<h1>Time's up!</h1>"; // Update content after timer
+    }, countdownTime);
+  }
+</script>
+</body>
+</html>
